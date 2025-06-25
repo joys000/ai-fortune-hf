@@ -4,8 +4,7 @@ import os
 
 app = Flask(__name__)
 
-# Hugging Face Inference API
-API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2"
+API_URL = "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-alpha"
 headers = {
     "Authorization": f"Bearer {os.getenv('HF_API_KEY')}"
 }
@@ -21,7 +20,6 @@ def query_fortune(prompt):
         response.raise_for_status()
         result = response.json()
 
-        # 출력 구조 확인 및 텍스트 추출
         if isinstance(result, list) and "generated_text" in result[0]:
             return result[0]["generated_text"]
         elif isinstance(result, dict) and "error" in result:
@@ -40,12 +38,11 @@ def index():
         birth_date = request.form["birth_date"]
         birth_time = request.form["birth_time"]
 
-        # 프롬프트 구성
         prompt = (
             f"이름: {name} ({hanja_name})\n"
             f"생년월일: {birth_date}\n"
             f"태어난 시간: {birth_time}\n\n"
-            f"이 정보를 바탕으로 오늘의 운세를 자세히 분석해줘."
+            f"이 정보를 바탕으로 오늘의 운세를 한국어로 자세히 분석해줘."
         )
 
         fortune = query_fortune(prompt)
