@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>운세 확인</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+        .button-group button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        function showForm(category) {
+            document.getElementById("category").value = category;
+            document.getElementById("step1").style.display = "none";
+            document.getElementById("step2").style.display = "block";
+        }
+
+        function selectPeriod(period) {
+            document.getElementById("period").value = period;
+        }
+    </script>
+</head>
+<body>
+    <div id="step1">
+        <h1>어떤 운세를 확인하시겠습니까?</h1>
+        <div class="button-group">
+            <button onclick="showForm('일반')">일반 운세</button>
+            <button onclick="showForm('직장')">직장 운세</button>
+            <button onclick="showForm('건강')">건강 운세</button>
+            <button onclick="showForm('연애')">연애 운세</button>
+        </div>
+    </div>
+
+    <div id="step2" class="hidden">
+        <form method="POST">
+            <input type="hidden" name="category" id="category">
+            <input type="hidden" name="period" id="period">
+            <label>이름: <input type="text" name="name" required></label><br><br>
+            <label>생년월일 (YYYY-MM-DD): <input type="text" name="birth" required></label><br><br>
+            <label>태어난 시간 (예: 오전 10시): <input type="text" name="time" required></label><br><br>
+            <div class="button-group">
+                <button type="button" onclick="selectPeriod('내일')">내일의 운세</button>
+                <button type="button" onclick="selectPeriod('이번주')">이번주 운세</button>
+                <button type="button" onclick="selectPeriod('이번달')">이번달 운세</button>
+            </div><br>
+            <button type="submit">운세 보기</button>
+        </form>
+    </div>
+</body>
+</html>
