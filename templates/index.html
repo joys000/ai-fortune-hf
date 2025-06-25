@@ -1,17 +1,31 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>AI 운세</title>
+    <title>오늘의 운세</title>
 </head>
 <body>
-    <h1>AI 운세 분석</h1>
-    <form method="POST">
+    <h1>운세 확인하기</h1>
+    <form method="post">
         <label>이름: <input type="text" name="name" required></label><br>
-        <label>한자 이름: <input type="text" name="hanja_name"></label><br>
+        <label>한자 이름: <input type="text" name="hanja_name" required></label><br>
         <label>생년월일: <input type="date" name="birth_date" required></label><br>
-        <label>태어난 시간: <input type="time" name="birth_time" required></label><br>
+        <label>태어난 시간: 
+            <select name="birth_time" required>
+                <option value="23:30~01:30">자시 (23:30~01:30)</option>
+                <option value="01:30~03:30">축시 (01:30~03:30)</option>
+                <option value="03:30~05:30">인시 (03:30~05:30)</option>
+                <option value="05:30~07:30">묘시 (05:30~07:30)</option>
+                <option value="07:30~09:30">진시 (07:30~09:30)</option>
+                <option value="09:30~11:30">사시 (09:30~11:30)</option>
+                <option value="11:30~13:30">오시 (11:30~13:30)</option>
+                <option value="13:30~15:30">미시 (13:30~15:30)</option>
+                <option value="15:30~17:30">신시 (15:30~17:30)</option>
+                <option value="17:30~19:30">유시 (17:30~19:30)</option>
+                <option value="19:30~21:30">술시 (19:30~21:30)</option>
+                <option value="21:30~23:30">해시 (21:30~23:30)</option>
+            </select>
+        </label><br>
         <button type="submit">운세 보기</button>
     </form>
 </body>
