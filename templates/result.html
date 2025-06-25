@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>운세 결과</title>
+  <meta charset="UTF-8">
+  <title>운세 결과</title>
 </head>
 <body>
-    <h1>운세 결과</h1>
-    <p>{{ fortune|safe }}</p>
-    <a href="/">다시 보기</a>
+  <h1>{{ name }} ({{ hanja }})님의 운세</h1>
+  <p><strong>{{ sign }}</strong> 기준 운세</p>
+  <p>{{ fortune }}</p>
+  <a href="/">다시 보기</a>
 </body>
 </html>
