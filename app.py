@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import requests
 import os
 
@@ -28,23 +28,17 @@ def generate_fortune(name, birth, time, category, period):
     except Exception as e:
         return f"운세 분석 중 오류 발생: {e}"
 
-@app.route("/")
-def home():
-    return render_template("home.html")
-
-@app.route("/select_period/<category>")
-def select_period(category):
-    return render_template("select_period.html", category=category)
-
-@app.route("/form/<category>/<period>", methods=["GET", "POST"])
-def form(category, period):
+@app.route("/", methods=["GET", "POST"])
+def index():
     if request.method == "POST":
         name = request.form['name']
         birth = request.form['birth']
         time = request.form['time']
+        category = request.form['category']
+        period = request.form['period']
         fortune = generate_fortune(name, birth, time, category, period)
         return render_template("result.html", name=name, fortune=fortune, category=category, period=period)
-    return render_template("form.html", category=category, period=period)
+    return render_template("index.html")
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
