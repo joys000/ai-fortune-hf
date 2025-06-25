@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>오늘의 운세</title>
+  <meta charset="UTF-8">
+  <title>운세 웹사이트</title>
 </head>
 <body>
-    <h1>운세 확인하기</h1>
-    <form method="post">
-        <label>이름: <input type="text" name="name" required></label><br>
-        <label>한자 이름: <input type="text" name="hanja_name" required></label><br>
-        <label>생년월일: <input type="date" name="birth_date" required></label><br>
-        <label>태어난 시간: 
-            <select name="birth_time" required>
-                <option value="23:30~01:30">자시 (23:30~01:30)</option>
-                <option value="01:30~03:30">축시 (01:30~03:30)</option>
-                <option value="03:30~05:30">인시 (03:30~05:30)</option>
-                <option value="05:30~07:30">묘시 (05:30~07:30)</option>
-                <option value="07:30~09:30">진시 (07:30~09:30)</option>
-                <option value="09:30~11:30">사시 (09:30~11:30)</option>
-                <option value="11:30~13:30">오시 (11:30~13:30)</option>
-                <option value="13:30~15:30">미시 (13:30~15:30)</option>
-                <option value="15:30~17:30">신시 (15:30~17:30)</option>
-                <option value="17:30~19:30">유시 (17:30~19:30)</option>
-                <option value="19:30~21:30">술시 (19:30~21:30)</option>
-                <option value="21:30~23:30">해시 (21:30~23:30)</option>
-            </select>
-        </label><br>
-        <button type="submit">운세 보기</button>
-    </form>
+  <h1>오늘의 운세</h1>
+
+  <form action="/result" method="post">
+    <label>이름 (한글): <input type="text" id="koreanName" name="name" required></label>
+    <button type="button" onclick="searchHanja()">한자 추천</button><br>
+
+    <label>이름 (한자): <input type="text" id="hanjaName" name="hanja_name" required></label><br>
+    <div id="hanjaSuggestions" style="margin:10px 0;"></div>
+
+    <label>생년: <input type="number" name="year" required></label><br>
+    <label>월: <input type="number" name="month" required></label><br>
+    <label>일: <input type="number" name="day" required></label><br>
+
+    <button type="submit">운세 확인</button>
+  </form>
+
+  <script>
+    function searchHanja() {
+      const name = document.getElementById("koreanName").value;
+      if (!name) return alert("한글 이름을 입력하세요!");
+
+      fetch(`/search_hanja?name=${encodeURIComponent(name)}`)
+        .then(res => res.json())
+        .then(data => {
+          const container = document.getElementById("hanjaSuggestions");
+          container.innerHTML = "";
+          if (data.options.length === 0) {
+            container.innerHTML = "<p>추천 한자가 없습니다.</p>";
+            return;
+          }
+
+          data.options.forEach(h => {
+            const span = document.createElement("span");
+            span.textContent = h;
+            span.style.cursor = "pointer";
+            span.style.marginRight = "10px";
+            span.onclick = () => document.getElementById("hanjaName").value = h;
+            container.appendChild(span);
+          });
+        });
+    }
+  </script>
 </body>
 </html>
